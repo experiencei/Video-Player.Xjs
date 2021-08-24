@@ -59,7 +59,24 @@ function setProgress(e) {
   }
 
 // Volume Controls --------------------------- //
+let lastVolume = 1;
 
+// Mute
+function toggleMute() {
+  volumeIcon.className = '';
+  if (video.volume) {
+    lastVolume = video.volume;
+    video.volume = 0;
+    volumeIcon.classList.add('fas', 'fa-volume-mute');
+    volumeIcon.setAttribute('title', 'Unmute');
+    volumeBar.style.width = 0;
+  } else {
+    video.volume = lastVolume;
+    volumeIcon.classList.add('fas', 'fa-volume-up');
+    volumeIcon.setAttribute('title', 'Mute');
+    volumeBar.style.width = `${lastVolume * 100}%`;
+  }
+}
 
 // Volume Bar
 function changeVolume(e) {
@@ -99,3 +116,5 @@ video.addEventListener('click', togglePlay);
 video.addEventListener('timeupdate', updateProgress);
 video.addEventListener('canplay', updateProgress);
 progressRange.addEventListener('click', setProgress);
+volumeRange.addEventListener('click', changeVolume);
+volumeIcon.addEventListener('click', toggleMute);
